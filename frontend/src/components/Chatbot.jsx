@@ -13,19 +13,36 @@ function Chatbot() {
       const newChatlog = [...chatlog, { sender: 'user', message: userInput }];
       setChatlog(newChatlog);
       setUserInput('');
-
+      setIsChatting(true); // Open animation box to full height immediately when the user submits input
+  
       try {
         const response = await axios.post('http://127.0.0.1:5000/get_response', {
           user_input: userInput,
         });
-        setChatlog([...newChatlog, { sender: 'bot', message: response.data.response }]);
-        setIsChatting(true);
+  
+        // Function to reveal the entire message with typing effect
+        const revealMessage = async (message) => {
+          let typedMessage = '';
+          for (let i = 0; i <= message.length; i++) {
+            typedMessage = message.substring(0, i);
+            setChatlog((prevChatlog) => [...newChatlog, { sender: 'bot', message: typedMessage }]);
+            await new Promise(resolve => setTimeout(resolve, 2)); // Adjust typing speed here (e.g.,  milliseconds)
+          }
+          setIsChatting(true);
+        };
+  
+        // Call the function to reveal the message with typing effect
+        await revealMessage(response.data.response);
       } catch (error) {
         setChatlog([...newChatlog, { sender: 'bot', message: 'Sorry, there was an error processing your request.' }]);
         setIsChatting(true);
       }
     }
   };
+  
+  
+  
+  
 
   useEffect(() => {
     if (chatContainerRef.current) {
