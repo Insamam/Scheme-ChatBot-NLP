@@ -115,32 +115,30 @@ def handle_unknown_question():
     return random.choice(unknown_responses)
 
 def handle_greetings_and_sentiments(user_input):
-    greetings = ["hi", "hello", "good morning", "good afternoon", "good evening", "hey", "gud morning", "greetings", "howdy", "hola", "bonjour", "ciao", "namaste", "salaam", "aloha", "shalom", "konnichiwa", "yo", "what's up", "wassup", "sup", "ahoy", "g'day", "hiya", "well hello there", "greetings and salutations", "howdy partner", "hey there", "hi there"]
-    sentiments = ["how are you", "what's up", "whats up" "how's it going", "how are you doing", "how you doing", "how's everything", "how r u", "how r you", "how ru", "how ru doing", "how are things", "how goes it", "how's life", "how's your day"]
-    
-    user_input = user_input.lower()
+    greetings = ["hi", "hello", "good morning", "good afternoon", "good evening", "hey", "gud morning"]
+    sentiments = ["how are you", "what's up", "how's it going"]
 
     for greeting in greetings:
         if greeting in user_input:
-            return random.choice(["Hello! How can I assist you today?", "Hi there! What would you like to know about?", "Hey! How can I help you?", "Greetings! How may I be of service?", "Howdy! What can I help you with?", "Yo! What's up? How can I help?", "G'day! What can I do for you?", "Well hello there! How can I assist you today?"])
+            return random.choice(["Hello! How can I assist you today?", "Hi there! What would you like to know about?", "Hey! How can I help you?"])
 
     for sentiment in sentiments:
         if sentiment in user_input:
-            return random.choice(["I'm just a bot, but I'm here to help you!", "I'm here to assist you. How can I help?", "I'm here to provide information on schemes. How can I assist you?", "I'm an AI assistant, but I'll do my best to help you!", "I'm doing well, thanks for asking! How can I assist you today?"])
+            return random.choice(["I'm just a bot, but I'm here to help you!", "I'm here to assist you. How can I help?", "I'm here to provide information on schemes. How can I assist you?"])
 
     return None
 
 def is_valid_query(user_input):
     # Tokenize the input into words
     tokens = word_tokenize(user_input)
-    
+   
     # Remove stop words and punctuation
     filtered_tokens = [word.lower() for word in tokens if word.lower() not in stop_words and word.isalnum()]
-    
+   
     # Check if there are any remaining meaningful words using a word dictionary
     english_words = set(nltk.corpus.words.words())
     meaningful_words = [word for word in filtered_tokens if word in english_words]
-    
+   
     # Consider the query valid if it contains at least one meaningful word
     return len(meaningful_words) > 0
 
@@ -177,5 +175,7 @@ def get_response():
 
     return jsonify({"response": response})
 
-if __name__ == '__main__':
+if __name__ == '_main_':
     app.run(debug=True)
+
+
