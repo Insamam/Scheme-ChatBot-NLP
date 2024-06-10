@@ -1,0 +1,5 @@
+# Ignore the myenv file
+myenv
+
+# Or, if myenv is a directory
+myenv/
